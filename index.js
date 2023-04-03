@@ -1,22 +1,16 @@
 const express = require('express')
-const axios = require('axios')
+
+const convertRoute = require('./Routes/Convert')
+
 const app = express()
+const port = 3000
 
-app.get('/', function(req, res) {
-    let from = req.query.from
-    let to = req.query.to
-    let amount = req.query.amount
-
-    axios.get(`https://economia.awesomeapi.com.br/last/${from}-${to}`)
-    .then(response => {
-      res.json(amount * response.data[`${from}${to}`].ask);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).send('Error retrieving data from API');
-    });
+app.get('/', (req, res) => {
+    res.send('Currency converter')
 })
 
-app.listen(3000, function() {
-    console.log("Server listening on port 3000")
+app.use('/convert', convertRoute)
+
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`)
 })
