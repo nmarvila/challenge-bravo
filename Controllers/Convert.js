@@ -1,16 +1,12 @@
-const axios = require('axios')
+const convertService = require('../Services/Convert')
 
-module.exports.convert = (req, res) => {
-    let from = req.query.from
-    let to = req.query.to
-    let amount = req.query.amount
+module.exports.callConvert = async (req, res) => {
+    let result = await convertService.convert(req, res)
 
-    axios.get(`https://economia.awesomeapi.com.br/last/${from}-${to}`)
-    .then(response => {
-      res.json(amount * response.data[`${from}${to}`].ask);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).send('Error retrieving data from API');
-    })
+    if (result == undefined) {
+        res.status(404).send('0')
+    }
+    else {
+        res.status(200).send({data: {result}})
+    }
 }
