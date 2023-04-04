@@ -14,12 +14,10 @@ class RatesService {
 
         let rateBTCUSD = Number.parseFloat(rates.find(({from, to}) => from === 'BTC' && to === 'USD').rate)
         let rateETHUSD = Number.parseFloat(rates.find(({from, to}) => from === 'ETH' && to === 'USD').rate)
-
+        
         rates.push(new Currency('BTC', 'ETH', (rateBTCUSD / rateETHUSD).toFixed(10)))
         rates.push(new Currency('ETH', 'BTC', (rateETHUSD / rateBTCUSD).toFixed(10)))
 
-        rates.sort((a, b) => a.from.localeCompare(b.from))
-        console.log(rates)
         return rates
     }
 }
