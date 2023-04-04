@@ -1,21 +1,9 @@
+const RatesService = require('../Services/Rates')
 const CurrencyRepository = require('./CurrencyRepository')
 const Currency = require('../Model/Currency')
-const redis = require('redis')
+const redis = require('../Services/Redis')
 
-const client = redis.createClient({
-    host: 'localhost',
-    port: 6379,
-});
-
-client.connect();
-  
-client.on('connect', () => {
-    console.log('Connected to Redis');
-});
-
-client.on('error', (err) => {
-    console.error('Error connecting to Redis:', err);
-});
+const ratesService = new RatesService()
 
 class CurrencyRepositoryRedis extends CurrencyRepository {
     constructor() {
@@ -23,15 +11,21 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
     }
 
     getRate = (from, to) => {
-        return client.hGet(`${from}${to}`, rate)
+        return redis.hGet(`${from}${to}`, rate)
     }
 
     setRate = (from, to, rate) => {
-        client.hSet(`${from}${to}`, `rate`, `${rate}`)
+        let currency = new Currency(from, to, rate)
+        redis.hSet(`rates`, `${from}-${to}`, `${currency}`)
     }
 
     deleteRate = (from, to) => {
-        client.hDel(`${from}${to}`)
+        redis.hDel(`${from}${to}`)
+    }
+
+    loadRates = () => {
+        let currencies = ['USD-BRL','USD-EUR','BTC-USD','ETH-USD','BRL-EUR','BTC-BRL','ETH-BRL','BTC-EUR','ETH-EUR']
+        ratesService.getRates(currencies)
     }
 }
 

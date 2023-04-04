@@ -21,7 +21,7 @@ class ConvertService {
             url = `${url}${from}-${to}`
             let rate = await axios.get(url)
             let result = rate.data[`${from}${to}`].ask * amount
-            this.currencyRepository.setRate(from, to, result)
+            this.currencyRepository.loadRates()
             return result
         }
     }
