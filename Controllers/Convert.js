@@ -1,6 +1,8 @@
-const convertService = require('../Services/Convert')
+const ConvertService = require('../Services/Convert')
+const CurrencyRepositoryRedisInstance = require('../Repository/CurrencyRepositoryRedis')
 
 module.exports.callConvert = async (req, res) => {
+    let convertService = new ConvertService(CurrencyRepositoryRedisInstance)
     let result = await convertService.convert(req, res)
 
     if (result == undefined) {
