@@ -11,6 +11,10 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
     }
 
     getRate = async (from, to) => {
+        let exists = await redis.exists('rates')
+        if (exists == 0) {
+            await this.loadRates()
+        }
         let rate = await redis.hGet('rates', `${from}-${to}`)
         return rate
     }
@@ -29,6 +33,7 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
         rates.forEach(rate => {
             this.setRate(rate.from, rate.to, rate.rate)
         });
+        redis.expire('rates', 60)
     }
 }
 
