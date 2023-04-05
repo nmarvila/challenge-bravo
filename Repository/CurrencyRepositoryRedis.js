@@ -33,7 +33,7 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
         rates.forEach(rate => {
             this.setRate(rate.from, rate.to, rate.rate)
         });
-        redis.expire('rates', 60)
+        redis.expire('rates', 600)
     }
 }
 
