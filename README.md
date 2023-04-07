@@ -38,7 +38,6 @@ Delete a currency convert rate:
 - [Docker](https://www.docker.com/)
 - [Express](https://expressjs.com/)
 - [axios](https://www.npmjs.com/package/axios)
-- [npm-run-all](https://www.npmjs.com/package/npm-run-all)
 
 ## Tests
 
@@ -46,8 +45,7 @@ Delete a currency convert rate:
 
 - Clone the repository to your machine
 - Open a terminal in the containing folder of the project
-- Run the command `sudo docker build -t currency-converter .` to build the docker image of the app
-- Run the command `sudo docker run --name currency -p 3000:3000 -p 6379:6379 -d currency-converter` to run a container with the application
+- Run the command `sudo docker compose up` to build the docker image of the app and to run the containers with the application
 
 After this the API should be running on the address `http://localhost:3000`. To test it, you can use your preferred tool for making HTTP requests ([curl](https://curl.se/), [Postman](https://www.postman.com/), etc).
 

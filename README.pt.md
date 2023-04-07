@@ -38,7 +38,6 @@ Deletar uma cotação de conversão de moedas:
 - [Docker](https://www.docker.com/)
 - [Express](https://expressjs.com/)
 - [axios](https://www.npmjs.com/package/axios)
-- [npm-run-all](https://www.npmjs.com/package/npm-run-all)
 
 ## Testes
 
@@ -46,8 +45,7 @@ Deletar uma cotação de conversão de moedas:
 
 - Clone o repositório para sua máquina
 - Abra um terminal na pasta que contêm o projeto
-- Rode o comando `sudo docker build -t currency-converter .` para construir a imagem do app
-- Rode o comando `sudo docker run --name currency -p 3000:3000 -p 6379:6379 -d currency-converter` para executar um container com a aplicação
+- Rode o comando `sudo docker compose up` para construir a imagem do app e para executar os contêineres com a aplicação
 
 Depois disso, a API deverá estar disponível no endereço `http://localhost:3000`. Para testá-la, você pode usar sua ferramenta preferida para fazer requisições HTTP ([curl](https://curl.se/), [Postman](https://www.postman.com/), etc).
 
