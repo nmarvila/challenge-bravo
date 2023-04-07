@@ -38,6 +38,8 @@ Delete a currency convert rate:
 - [Docker](https://www.docker.com/)
 - [Express](https://expressjs.com/)
 - [axios](https://www.npmjs.com/package/axios)
+- [Jest](https://jestjs.io/)
+- [SuperTest](https://www.npmjs.com/package/supertest)
 
 ## Tests
 
