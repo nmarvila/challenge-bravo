@@ -11,6 +11,7 @@ module.exports.callSet = async (req, res) => {
     else {
         res.status(200).send({data: {result}})
     }
+    req.connection.destroy()
 }
 
 module.exports.callDelete = async (req, res) => {
@@ -22,4 +23,5 @@ module.exports.callDelete = async (req, res) => {
     else {
         res.status(200).send({data: {result}})
     }
+    req.connection.destroy()
 }

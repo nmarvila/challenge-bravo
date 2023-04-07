@@ -11,4 +11,5 @@ module.exports.callConvert = async (req, res) => {
     else {
         res.status(200).send({data: {result}})
     }
+    req.connection.destroy()
 }
