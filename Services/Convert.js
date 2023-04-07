@@ -9,8 +9,12 @@ class ConvertService {
         let amount = req.query.amount
 
         let rate = await this.currencyRepository.getRate(from, to)
-        let result = amount * rate
-        return result
+        if (rate > 0) {
+            let result = amount * rate
+            return result
+        } else {
+            return undefined
+        }
     }
 }
 
