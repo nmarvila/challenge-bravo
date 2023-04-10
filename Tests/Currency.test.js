@@ -3,35 +3,40 @@ const url = 'http://localhost:3000'
 
 test('tests /currency endpoint to post a new conversion rate', async () => {
     const response = await request(url).post('/currency?from=HURB&to=BRL&rate=3')
+    const responseValue = JSON.parse(response.text).data.result
     expect(response).not.toEqual(null)
     expect(response.statusCode).toEqual(200)
-    expect(JSON.parse(response.text).data.result).toEqual("OK")
+    expect(responseValue).toEqual("OK")
 })
 
 test('tests /currency endpoint to delete a conversion rate', async () => {
     const responsePost = await request(url).post('/currency?from=HURB&to=BRL&rate=3')
     const responseDelete = await request(url).delete('/currency?from=HURB&to=BRL')
+    const responsePostValue = JSON.parse(responsePost.text).data.result
+    const responseDeleteValue = JSON.parse(responseDelete.text).data.result
     expect(responsePost).not.toEqual(null)
     expect(responseDelete).not.toEqual(null)
     expect(responsePost.statusCode).toEqual(200)
     expect(responseDelete.statusCode).toEqual(200)
-    expect(JSON.parse(responsePost.text).data.result).toEqual("OK")
-    expect(JSON.parse(responseDelete.text).data.result).toEqual("OK")
+    expect(responsePostValue).toEqual("OK")
+    expect(responseDeleteValue).toEqual("OK")
 })
 
 test('test /currency endpoint to get all the available conversion rates', async () => {
     const response = await request(url).get('/currency')
+    const responseValue = JSON.parse(response.text).data.result
     expect(response).not.toEqual(null)
     expect(response.statusCode).toEqual(200)
-    expect(JSON.parse(response.text).data.result.length).toBeGreaterThan(0)
+    expect(responseValue.length).toBeGreaterThan(0)
 })
 
 test('test /currency endpoint to get a specific conversion rate that exists', async () => {
     const response = await request(url).get('/currency?from=USD&to=BRL')
+    const responseValue = Number.parseFloat(JSON.parse(response.text).data.result)
     expect(response).not.toEqual(null)
     expect(response.statusCode).toEqual(200)
-    expect(JSON.parse(response.text).data.result).not.toEqual(undefined)
-    expect(Number.parseFloat(JSON.parse(response.text).data.result)).toBeGreaterThan(0)
+    expect(responseValue).not.toEqual(undefined)
+    expect(responseValue).toBeGreaterThan(0)
 })
 
 test('test /currency endpoint to get a specific conversion rate that doesn\'t exist', async () => {
