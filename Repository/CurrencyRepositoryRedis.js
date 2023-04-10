@@ -32,8 +32,8 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
     }
 
     loadRates = async () => {
-        const currencies = ['USD-BRL','USD-EUR','BTC-USD','ETH-USD','BRL-EUR','BTC-BRL','ETH-BRL','BTC-EUR','ETH-EUR']
-        const rates = await ratesService.getRates(currencies)
+        const defaultCurrencies = ['USD-BRL','USD-EUR','BTC-USD','ETH-USD','BRL-EUR','BTC-BRL','ETH-BRL','BTC-EUR','ETH-EUR']
+        const rates = await ratesService.getRates(defaultCurrencies)
         rates.forEach(rate => {
             this.setRate(rate.from, rate.to, rate.rate)
         });
