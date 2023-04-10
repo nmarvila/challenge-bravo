@@ -35,6 +35,16 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
         });
         redis.expire('rates', 600)
     }
+
+    getRates = async () => {
+        let rates = await redis.hGetAll('rates')
+        let result = []
+        Object.entries(rates).forEach(rate => {
+            let codes = rate[0].split('-')
+            result.push({from: codes[0], to: codes[1], rate: rate[1]})
+        });
+        return result
+    }
 }
 
 const CurrencyRepositoryRedisInstance = new CurrencyRepositoryRedis()

@@ -23,4 +23,5 @@ test('test /currency endpoint to get all the available conversion rates', async 
     const response = await request(url).get('/currency')
     expect(response).not.toEqual(null)
     expect(response.statusCode).toEqual(200)
+    expect(JSON.parse(response.text).data.result.length).toBeGreaterThan(0)
 })

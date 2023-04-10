@@ -19,6 +19,11 @@ class CurrencyService {
         await this.currencyRepository.deleteRate(from, to)
         return 'OK'
     }
+
+    get = async (req, res) => {
+        let rates = await this.currencyRepository.getRates()
+        return rates
+    }
 }
 
 module.exports = CurrencyService
