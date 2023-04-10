@@ -21,8 +21,16 @@ class CurrencyService {
     }
 
     get = async (req, res) => {
-        let rates = await this.currencyRepository.getRates()
-        return rates
+        let from = req.query.from
+        let to = req.query.to
+
+        if (from != undefined && to != undefined) {
+            let rate = await this.currencyRepository.getRate(from, to)
+            return rate
+        } else {
+            let rates = await this.currencyRepository.getRates()
+            return rates
+        }
     }
 }
 
