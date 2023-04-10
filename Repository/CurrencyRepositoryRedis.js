@@ -11,25 +11,25 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
     }
 
     getRate = async (from, to) => {
-        let exists = await redis.exists('rates')
+        const exists = await redis.exists('rates')
         if (exists == 0) {
             await this.loadRates()
         }
-        let rate = await redis.hGet('rates', `${from}-${to}`)
+        const rate = await redis.hGet('rates', `${from}-${to}`)
         return rate
     }
 
-    setRate = (from, to, rate) => {
-        redis.hSet('rates', `${from}-${to}`, `${rate}`)
+    setRate = async (from, to, rate) => {
+        await redis.hSet('rates', `${from}-${to}`, `${rate}`)
     }
 
-    deleteRate = (from, to) => {
-        redis.hDel('rates', `${from}-${to}`)
+    deleteRate = async (from, to) => {
+        await redis.hDel('rates', `${from}-${to}`)
     }
 
     loadRates = async () => {
-        let currencies = ['USD-BRL','USD-EUR','BTC-USD','ETH-USD','BRL-EUR','BTC-BRL','ETH-BRL','BTC-EUR','ETH-EUR']
-        let rates = await ratesService.getRates(currencies)
+        const currencies = ['USD-BRL','USD-EUR','BTC-USD','ETH-USD','BRL-EUR','BTC-BRL','ETH-BRL','BTC-EUR','ETH-EUR']
+        const rates = await ratesService.getRates(currencies)
         rates.forEach(rate => {
             this.setRate(rate.from, rate.to, rate.rate)
         });
@@ -37,10 +37,10 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
     }
 
     getRates = async () => {
-        let rates = await redis.hGetAll('rates')
+        const rates = await redis.hGetAll('rates')
         let result = []
         Object.entries(rates).forEach(rate => {
-            let codes = rate[0].split('-')
+            const codes = rate[0].split('-')
             result.push({from: codes[0], to: codes[1], rate: rate[1]})
         });
         return result
