@@ -10,21 +10,23 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
         this.loadRates()
     }
 
+    getRateCode = (from, to) => { return `${from}-${to}` }
+
     getRate = async (from, to) => {
         const exists = await redis.exists('rates')
         if (exists == 0) {
             await this.loadRates()
         }
-        const rate = await redis.hGet('rates', `${from}-${to}`)
+        const rate = await redis.hGet('rates', this.getRateCode(from, to))
         return rate
     }
 
     setRate = async (from, to, rate) => {
-        await redis.hSet('rates', `${from}-${to}`, `${rate}`)
+        await redis.hSet('rates', this.getRateCode(from, to), `${rate}`)
     }
 
     deleteRate = async (from, to) => {
-        await redis.hDel('rates', `${from}-${to}`)
+        await redis.hDel('rates', this.getRateCode(from, to))
     }
 
     loadRates = async () => {
