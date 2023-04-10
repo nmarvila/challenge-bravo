@@ -33,3 +33,10 @@ test('test /currency endpoint to get a specific conversion rate that exists', as
     expect(JSON.parse(response.text).data.result).not.toEqual(undefined)
     expect(Number.parseFloat(JSON.parse(response.text).data.result)).toBeGreaterThan(0)
 })
+
+test('test /currency endpoint to get a specific conversion rate that doesn\'t exist', async () => {
+    const response = await request(url).get('/currency?from=HURB&to=BRL')
+    expect(response).not.toEqual(null)
+    expect(response.statusCode).toEqual(404)
+    expect(response.text).toEqual('0')
+})
