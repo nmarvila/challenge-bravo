@@ -8,7 +8,7 @@ class CurrencyService {
         const to = req.query.to
         const rate = req.query.rate
 
-        await this.currencyRepository.setRate(from, to, rate)
+        await this.currencyRepository.setRate(from, to, rate, true)
         return 'OK'
     }
 

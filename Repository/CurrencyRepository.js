@@ -1,6 +1,6 @@
 class CurrencyRepository {
     getRate = (from, to) => { }
-    setRate = (from, to, rate) => { }
+    setRate = (from, to, rate, isCustomRate) => { }
     deleteRate = (from, to) => { }
     loadRates = () => { }
     getRates = () => { }
