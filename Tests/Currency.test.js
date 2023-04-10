@@ -18,3 +18,9 @@ test('tests /currency endpoint to delete a conversion rate', async () => {
     expect(JSON.parse(responsePost.text).data.result).toEqual("OK")
     expect(JSON.parse(responseDelete.text).data.result).toEqual("OK")
 })
+
+test('test /currency endpoint to get all the available conversion rates', async () => {
+    const response = await request(url).get('/currency')
+    expect(response).not.toEqual(null)
+    expect(response.statusCode).toEqual(200)
+})
