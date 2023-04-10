@@ -2,6 +2,8 @@ const RatesService = require('../Services/Rates')
 const CurrencyRepository = require('./CurrencyRepository')
 const redis = require('../Services/Redis')
 
+const CURRENCY_RATES_EXPIRY_TIME_SECONDS = 600
+
 const ratesService = new RatesService()
 
 class CurrencyRepositoryRedis extends CurrencyRepository {
@@ -35,7 +37,7 @@ class CurrencyRepositoryRedis extends CurrencyRepository {
         rates.forEach(rate => {
             this.setRate(rate.from, rate.to, rate.rate)
         });
-        redis.expire('rates', 600)
+        redis.expire('rates', CURRENCY_RATES_EXPIRY_TIME_SECONDS)
     }
 
     getRates = async () => {
