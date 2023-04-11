@@ -4,7 +4,7 @@
   "description": "Backend challenge by Nichollas Marvila.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "start": "node index.js"
   },
   "author": "Nichollas Marvila",
